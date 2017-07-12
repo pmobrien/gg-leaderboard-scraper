@@ -90,15 +90,27 @@ function getResults(num, division, callback) {
 function addResults($, rows) {
   for(var i = 0; i < rows.length; ++i) {
     if($(rows[i].childNodes[WOD1_INDEX]).children('span').eq(1)[0]) {
-      wod1.push(+$(rows[i].childNodes[WOD1_INDEX]).children('span').eq(1)[0].children[0].data);
+      var value = +$(rows[i].childNodes[WOD1_INDEX]).children('span').eq(1)[0].children[0].data;
+    
+      if(value) {
+        wod1.push(value);
+      }
     }
 
     if($(rows[i].childNodes[WOD2_INDEX]).children('span').eq(1)[0]) {
-      wod2.push(+$(rows[i].childNodes[WOD2_INDEX]).children('span').eq(1)[0].children[0].data);
+      var value = +$(rows[i].childNodes[WOD2_INDEX]).children('span').eq(1)[0].children[0].data;
+    
+      if(value) {
+        wod2.push(value);
+      }
     }
 
     if($(rows[i].childNodes[WOD3_INDEX]).children('span').eq(1)[0]) {
-      wod3.push(+$(rows[i].childNodes[WOD3_INDEX]).children('span').eq(1)[0].children[0].data);
+      var value = +$(rows[i].childNodes[WOD3_INDEX]).children('span').eq(1)[0].children[0].data;
+    
+      if(value) {
+        wod3.push(value);
+      }
     }
   }
 }
