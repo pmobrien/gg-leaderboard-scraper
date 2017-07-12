@@ -6,10 +6,13 @@ var path = require('path');
 const cheerio = require('cheerio');
 
 http.createServer(function(request, response) {
-  if(request.url == '/calculate') {
-    console.log('calculate request from ' + request.connection.remoteAddress);
+  if(request.url.includes('/calculate')) {
+    var ip = request.connection.remoteAddress;
+    var division = request.url.substring(request.url.length - 2);   // kind of hacky, oh well
   
-    calculate(function(data) {
+    console.log('calculate request for division ' + division + ' from ' + ip);
+  
+    calculate(division, function(data) {
       response.writeHead(200, { 'Content-Type': 'text/plain' });
       response.end(data, 'utf-8');
     });
@@ -63,21 +66,21 @@ var wod1;
 var wod2;
 var wod3;
 
-function calculate(callback) {
+function calculate(division, callback) {
   wod1 = [];
   wod2 = [];
   wod3 = [];
 
-  getResults(1, callback);
+  getResults(1, division, callback);
 }
 
-function getResults(num, callback) {
-  request('http://registration.floelite.com/competitions/10/divisions/51/scoreboard?page=' + num, function(error, response, body) {
+function getResults(num, division, callback) {
+  request('http://registration.floelite.com/competitions/10/divisions/' + division + '/scoreboard?page=' + num, function(error, response, body) {
     var $ = cheerio.load(response.body);
 
     if($('tr.checkboard').length) {
       addResults($, $('tr.checkboard'));
-      getResults(++num, callback);
+      getResults(++num, division, callback);
     } else {
       callback(doCalculate());
     }

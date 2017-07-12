@@ -6,7 +6,7 @@ function calculate() {
   $('#result').html('');
 
   $.ajax({
-    url: '/calculate',
+    url: '/calculate/' + $('#division-selector').val(),
     type: 'GET',
     success: function(data) {
       $('#result').html(data.replace(/\n/g, "<br />"));
