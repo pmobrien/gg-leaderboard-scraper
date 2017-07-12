@@ -1,3 +1,7 @@
+function onSelectChange() {
+  $('#result').html('');
+}
+
 function calculate() {
   $('#result').html('');
 

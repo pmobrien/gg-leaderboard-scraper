@@ -109,7 +109,7 @@ function calculateWod1() {
     return a - b;
   }).reverse();
 
-  return printWod(1, wod1, false);
+  return printWod(1, wod1, 'pounds', false);
 }
 
 function calculateWod2() {
@@ -117,7 +117,7 @@ function calculateWod2() {
     return a - b;
   }).reverse();
   
-  return printWod(2, wod2, true);
+  return printWod(2, wod2, 'reps', true);
 }
 
 function calculateWod3() {
@@ -125,12 +125,12 @@ function calculateWod3() {
     return a - b;
   }).reverse();
   
-  return printWod(3, wod3, true);
+  return printWod(3, wod3, 'reps', true);
 }
 
-function printWod(num, values, includeAthleteAverage) {
+function printWod(num, values, type, includeAthleteAverage) {
   var result = 'Workout ' + num + ' (' + values.length + ' submissions):\n' +
-               '  Team Average: ' + average(values) + ' reps\n' +
+               '  Team Average: ' + average(values) + ' ' + type + '\n' +
                '  Team Median: ' + median(values) + '\n' +
                '  Team High: ' + values[0] + '\n' +
                '  Team Low: ' + values[values.length - 1] + '\n';
@@ -152,7 +152,7 @@ function average(values) {
 }
 
 function athleteAverage(values) {
-  return Math.round(average(wod3) / 3);
+  return Math.round(average(values) / 3);
 }
 
 function median(values) {
