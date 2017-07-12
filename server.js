@@ -89,28 +89,18 @@ function getResults(num, division, callback) {
 
 function addResults($, rows) {
   for(var i = 0; i < rows.length; ++i) {
-    if($(rows[i].childNodes[WOD1_INDEX]).children('span').eq(1)[0]) {
-      var value = +$(rows[i].childNodes[WOD1_INDEX]).children('span').eq(1)[0].children[0].data;
-    
-      if(value) {
-        wod1.push(value);
-      }
-    }
+    addResult($, rows, i, WOD1_INDEX, wod1);
+    addResult($, rows, i, WOD2_INDEX, wod2);
+    addResult($, rows, i, WOD3_INDEX, wod3);
+  }
+}
 
-    if($(rows[i].childNodes[WOD2_INDEX]).children('span').eq(1)[0]) {
-      var value = +$(rows[i].childNodes[WOD2_INDEX]).children('span').eq(1)[0].children[0].data;
+function addResult($, rows, i, wodIndex, values) {
+  if($(rows[i].childNodes[wodIndex]).children('span').eq(1)[0]) {
+    var value = +$(rows[i].childNodes[wodIndex]).children('span').eq(1)[0].children[0].data;
     
-      if(value) {
-        wod2.push(value);
-      }
-    }
-
-    if($(rows[i].childNodes[WOD3_INDEX]).children('span').eq(1)[0]) {
-      var value = +$(rows[i].childNodes[WOD3_INDEX]).children('span').eq(1)[0].children[0].data;
-    
-      if(value) {
-        wod3.push(value);
-      }
+    if(value) {
+      values.push(value);
     }
   }
 }
