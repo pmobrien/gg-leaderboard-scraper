@@ -155,7 +155,7 @@ function printWod(num, values, type) {
                '  1st Place: ' + getScoreForPlace(values, type, 1) + '\n' +
                '  10th Place: ' + getScoreForPlace(values, type, 10) + '\n' +
                '  20th Place: ' + getScoreForPlace(values, type, 20) + '\n' +
-               '  45th Place (Qualifier Cutoff): ' + getScoreForPlace(values, type, 45) + '\n';
+               '  45th Place: ' + getScoreForPlace(values, type, 45) + '\n';
 
   return result + '\n';
 }
