@@ -152,6 +152,7 @@ function printWod(num, values, type) {
                '  Team Average (Top 10): ' + average(values, type, 10) + '\n' +
                '  Team Average (Top 20): ' + average(values, type, 20) + '\n' +
                '  Team Average (Top 45): ' + average(values, type, 45) + '\n' +
+               '  1st Place: ' + getScoreForPlace(values, type, 1) + '\n' +
                '  10th Place: ' + getScoreForPlace(values, type, 10) + '\n' +
                '  20th Place: ' + getScoreForPlace(values, type, 20) + '\n' +
                '  45th Place (Qualifier Cutoff): ' + getScoreForPlace(values, type, 45) + '\n';
@@ -194,5 +195,5 @@ function getScoreForPlace(values, type, place) {
     return 'N/A';
   }
 
-  return Math.round(values[place]) + ' (' + Math.round(values[place] / 3) + ' per athlete)';
+  return Math.round(values[place - 1]) + ' ' + type + ' (' + Math.round(values[place - 1] / 3) + ' per athlete)';
 }
