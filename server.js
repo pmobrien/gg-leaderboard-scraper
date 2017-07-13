@@ -128,7 +128,12 @@ function addResult($, rows, i, wodIndex, values) {
 }
 
 function doCalculate() {
-  return printWod(1, wod1, 'pounds') + printWod(2, wod2, 'reps') + printWod(3, wod3, 'reps');
+  return printWod(1, wod1, 'pounds') +
+         printWod(2, wod2, 'reps') +
+         printWod(3, wod3, 'reps') +
+         printWod(4, wod4, 'reps') +
+         printWod(5, wod5, 'reps') +
+         printWod(6, wod6, 'reps');
 }
 
 function printWod(num, values, type) {
@@ -139,8 +144,8 @@ function printWod(num, values, type) {
   var result = 'Workout ' + num + ' (' + values.length + ' submissions):\n' +
                '  Team Average: ' + average(values, type) + '\n' +
                '  Team Median: ' + median(values, type) + '\n' +
-               '  Team High: ' + values[0] + ' ' + type + '\n' +
-               '  Team Low: ' + values[values.length - 1] + ' ' + type + '\n' +
+               '  Team High: ' + high(values, type) + '\n' +
+               '  Team Low: ' + low(values, type) + '\n' +
                '  Team Average (Top 10): ' + average(values, type, 10) + '\n' +
                '  Team Average (Top 20): ' + average(values, type, 20) + '\n' +
                '  Team Average (Top 45): ' + average(values, type, 45) + '\n' +
@@ -153,8 +158,8 @@ function printWod(num, values, type) {
 }
 
 function average(values, type, count) {
-  // if we don't even have <count> values, don't do anything
-  if(count > values.length) {
+  // if we don't even have <count> values, or if the array is empty, don't do anything
+  if(count > values.length || values.length === 0) {
     return 'N/A';
   }
 
@@ -168,11 +173,11 @@ function average(values, type, count) {
   return Math.round(+total / +length) + ' ' + type + ' (' + Math.round(Math.round(+total / +length) / 3) + ' per athlete)';
 }
 
-function athleteAverage(values) {
-  return Math.round(average(values) / 3);
-}
-
 function median(values, type) {
+  if(values.length === 0) {
+    return 'N/A';
+  }
+
   var half = Math.floor(values.length / 2);
 
   var median = values.length % 2
@@ -180,6 +185,22 @@ function median(values, type) {
       : Math.round((values[half - 1] + values[half]) / 2);
 
   return median + ' ' + type + ' (' + (Math.round(median / 3)) + ' per athlete)';
+}
+
+function high(values, type) {
+  if(values.length === 0) {
+    return 'N/A';
+  }
+
+  return values[0] + ' ' + type;
+}
+
+function low(values, type) {
+  if(values.length === 0) {
+    return 'N/A';
+  }
+
+  return values[values.length - 1] + ' ' + type;
 }
 
 function getScoreForPlace(values, type, place) {
