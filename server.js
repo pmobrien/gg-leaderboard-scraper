@@ -71,15 +71,24 @@ http.createServer(function(request, response) {
 var WOD1_INDEX = 5;
 var WOD2_INDEX = 7;
 var WOD3_INDEX = 9;
+var WOD4_INDEX = 11;
+var WOD5_INDEX = 13;
+var WOD6_INDEX = 15;
 
 var wod1;
 var wod2;
 var wod3;
+var wod4;
+var wod5;
+var wod6;
 
 function calculate(division, callback) {
   wod1 = [];
   wod2 = [];
   wod3 = [];
+  wod4 = [];
+  wod5 = [];
+  wod6 = [];
 
   getResults(1, division, callback);
 }
@@ -102,6 +111,9 @@ function addResults($, rows) {
     addResult($, rows, i, WOD1_INDEX, wod1);
     addResult($, rows, i, WOD2_INDEX, wod2);
     addResult($, rows, i, WOD3_INDEX, wod3);
+    addResult($, rows, i, WOD4_INDEX, wod4);
+    addResult($, rows, i, WOD5_INDEX, wod5);
+    addResult($, rows, i, WOD6_INDEX, wod6);
   }
 }
 
@@ -116,34 +128,14 @@ function addResult($, rows, i, wodIndex, values) {
 }
 
 function doCalculate() {
-  return calculateWod1() + calculateWod2() + calculateWod3();
-}
-
-function calculateWod1() {
-  wod1.sort(function(a, b) {
-    return a - b;
-  }).reverse();
-
-  return printWod(1, wod1, 'pounds');
-}
-
-function calculateWod2() {
-  wod2.sort(function(a, b) {
-    return a - b;
-  }).reverse();
-
-  return printWod(2, wod2, 'reps');
-}
-
-function calculateWod3() {
-  wod3.sort(function(a, b) {
-    return a - b;
-  }).reverse();
-
-  return printWod(3, wod3, 'reps');
+  return printWod(1, wod1, 'pounds') + printWod(2, wod2, 'reps') + printWod(3, wod3, 'reps');
 }
 
 function printWod(num, values, type) {
+  values.sort(function(a, b) {
+    return a - b;
+  }).reverse();
+
   var result = 'Workout ' + num + ' (' + values.length + ' submissions):\n' +
                '  Team Average: ' + average(values, type) + '\n' +
                '  Team Median: ' + median(values, type) + '\n' +
