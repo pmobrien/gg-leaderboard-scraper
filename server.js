@@ -13,7 +13,7 @@ http.createServer(function(request, response) {
 
     console.log(
       'Request id: ' + id + '\n' +
-      'Calculate request for division ' + division + ' from ' + ip
+      'Calculate request for division ' + division + ' from ' + ip + '\n'
     );
 
     calculate(division, function(data) {
@@ -148,7 +148,9 @@ function printWod(num, values, type, includeAthleteAverage) {
                '  Team Average: ' + average(values) + ' ' + type + '\n' +
                '  Team Median: ' + median(values) + '\n' +
                '  Team High: ' + values[0] + '\n' +
-               '  Team Low: ' + values[values.length - 1] + '\n';
+               '  Team Low: ' + values[values.length - 1] + '\n' +
+               '  Team Average (Top 10): ' + average(values, 10) + '\n' +
+               '  Team Average (Top 20): ' + average(values, 20) + '\n';
 
   if(includeAthleteAverage) {
     result += '  Athlete Average: ' + athleteAverage(values) + ' reps\n';
@@ -157,13 +159,20 @@ function printWod(num, values, type, includeAthleteAverage) {
   return result + '\n';
 }
 
-function average(values) {
+function average(values, count) {
+  // if we don't even have _count_ values, don't do anything
+  if(count > values.length) {
+    return 'N/A';
+  }
+
+  var length = count || values.length;
+
   var total = 0;
-  for(var i = 0; i < values.length; ++i) {
+  for(var i = 0; i < length; ++i) {
     total += +values[i];
   }
 
-  return Math.round(+total / +values.length);
+  return Math.round(+total / +length);
 }
 
 function athleteAverage(values) {
