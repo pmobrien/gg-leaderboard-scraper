@@ -124,7 +124,7 @@ function calculateWod1() {
     return a - b;
   }).reverse();
 
-  return printWod(1, wod1, 'pounds', false);
+  return printWod(1, wod1, 'pounds');
 }
 
 function calculateWod2() {
@@ -132,7 +132,7 @@ function calculateWod2() {
     return a - b;
   }).reverse();
 
-  return printWod(2, wod2, 'reps', true);
+  return printWod(2, wod2, 'reps');
 }
 
 function calculateWod3() {
@@ -140,30 +140,26 @@ function calculateWod3() {
     return a - b;
   }).reverse();
 
-  return printWod(3, wod3, 'reps', true);
+  return printWod(3, wod3, 'reps');
 }
 
-function printWod(num, values, type, includeAthleteAverage) {
+function printWod(num, values, type) {
   var result = 'Workout ' + num + ' (' + values.length + ' submissions):\n' +
-               '  Team Average: ' + average(values) + ' ' + type + '\n' +
-               '  Team Median: ' + median(values) + '\n' +
-               '  Team High: ' + values[0] + '\n' +
-               '  Team Low: ' + values[values.length - 1] + '\n' +
-               '  Team Average (Top 10): ' + average(values, 10) + '\n' +
-               '  Team Average (Top 20): ' + average(values, 20) + '\n' +
-               '  Team Average (Top 45): ' + average(values, 45) + '\n' +
-               '  10th Place: ' + getScoreForPlace(values, 10) + '\n' +
-               '  20th Place: ' + getScoreForPlace(values, 20) + '\n' +
-               '  45th Place (Qualifier Cutoff): ' + getScoreForPlace(values, 45) + '\n';
-
-  if(includeAthleteAverage) {
-    result += '  Athlete Average: ' + athleteAverage(values) + ' reps\n';
-  }
+               '  Team Average: ' + average(values, type) + '\n' +
+               '  Team Median: ' + median(values, type) + '\n' +
+               '  Team High: ' + values[0] + ' ' + type + '\n' +
+               '  Team Low: ' + values[values.length - 1] + ' ' + type + '\n' +
+               '  Team Average (Top 10): ' + average(values, type, 10) + '\n' +
+               '  Team Average (Top 20): ' + average(values, type, 20) + '\n' +
+               '  Team Average (Top 45): ' + average(values, type, 45) + '\n' +
+               '  10th Place: ' + getScoreForPlace(values, type, 10) + '\n' +
+               '  20th Place: ' + getScoreForPlace(values, type, 20) + '\n' +
+               '  45th Place (Qualifier Cutoff): ' + getScoreForPlace(values, type, 45) + '\n';
 
   return result + '\n';
 }
 
-function average(values, count) {
+function average(values, type, count) {
   // if we don't even have <count> values, don't do anything
   if(count > values.length) {
     return 'N/A';
@@ -176,27 +172,27 @@ function average(values, count) {
     total += +values[i];
   }
 
-  return Math.round(+total / +length);
+  return Math.round(+total / +length) + ' ' + type + ' (' + Math.round(Math.round(+total / +length) / 3) + ' per athlete)';
 }
 
 function athleteAverage(values) {
   return Math.round(average(values) / 3);
 }
 
-function median(values) {
+function median(values, type) {
   var half = Math.floor(values.length / 2);
 
-  if(values.length % 2) {
-    return Math.round(values[half]);
-  } else {
-    return Math.round((values[half - 1] + values[half]) / 2.0);
-  }
+  var median = values.length % 2
+      ? Math.round(values[half])
+      : Math.round((values[half - 1] + values[half]) / 2);
+
+  return median + ' ' + type + ' (' + (Math.round(median / 3)) + ' per athlete)';
 }
 
-function getScoreForPlace(values, place) {
+function getScoreForPlace(values, type, place) {
   if(place > values.length) {
     return 'N/A';
   }
 
-  return Math.round(values[place]);
+  return Math.round(values[place]) + ' (' + Math.round(values[place] / 3) + ' per athlete)';
 }
