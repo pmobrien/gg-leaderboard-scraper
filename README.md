@@ -36,7 +36,8 @@ The response will look something like:
       "submissions": 4,
       "unit": "reps",
       ...
-    }
+    },
+    ...s
 }
 ```
 
