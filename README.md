@@ -37,7 +37,7 @@ The response will look something like:
       "unit": "reps",
       ...
     },
-    ...s
+    ...
 }
 ```
 
