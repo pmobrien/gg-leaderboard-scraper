@@ -13,18 +13,17 @@ http.createServer(function(request, response) {
 
     console.log(
       'Request id: ' + id + '\n' +
-      'Calculate request for division ' + division + ' from ' + ip + '\n'
+      '  Calculate request for division ' + division + ' from ' + ip + '\n'
     );
 
-    calculate(division, function(data) {
+    getResultsForDivision(division, function(data) {
       console.log(
         'Request id: ' + id + '\n' +
-        'Result:\n' +
-        data
+        '  Result: ' + JSON.stringify(data)
       );
 
-      response.writeHead(200, { 'Content-Type': 'text/plain' });
-      response.end(data, 'utf-8');
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(data));
     });
   } else {
     var filePath = '.' + request.url;
@@ -82,7 +81,7 @@ var wod4;
 var wod5;
 var wod6;
 
-function calculate(division, callback) {
+function getResultsForDivision(division, callback) {
   wod1 = [];
   wod2 = [];
   wod3 = [];
@@ -101,7 +100,7 @@ function getResults(num, division, callback) {
       addResults($, $('tr.checkboard'));
       getResults(++num, division, callback);
     } else {
-      callback(doCalculate());
+      callback(buildResults());
     }
   });
 }
@@ -127,86 +126,45 @@ function addResult($, rows, i, wodIndex, values) {
   }
 }
 
-function doCalculate() {
-  return printWod(1, wod1, 'pounds') +
-         printWod(2, wod2, 'reps') +
-         printWod(3, wod3, 'reps') +
-         printWod(4, wod4, 'reps') +
-         printWod(5, wod5, 'reps') +
-         printWod(6, wod6, 'reps');
-}
-
-function printWod(num, values, type) {
-  values.sort(function(a, b) {
-    return a - b;
-  }).reverse();
-
-  var result = 'Workout ' + num + ' (' + values.length + ' submissions):\n' +
-               '  Team Average: ' + average(values, type) + '\n' +
-               '  Team Median: ' + median(values, type) + '\n' +
-               '  Team High: ' + high(values, type) + '\n' +
-               '  Team Low: ' + low(values, type) + '\n' +
-               '  Team Average (Top 10): ' + average(values, type, 10) + '\n' +
-               '  Team Average (Top 20): ' + average(values, type, 20) + '\n' +
-               '  Team Average (Top 45): ' + average(values, type, 45) + '\n' +
-               '  1st Place: ' + score(values, type, 1) + '\n' +
-               '  10th Place: ' + score(values, type, 10) + '\n' +
-               '  20th Place: ' + score(values, type, 20) + '\n' +
-               '  45th Place: ' + score(values, type, 45) + '\n';
-
-  return result + '\n';
-}
-
-function average(values, type, count) {
-  // if we don't even have <count> values, or if the array is empty, don't do anything
-  if(count > values.length || values.length === 0) {
-    return 'N/A';
-  }
-
-  var length = count || values.length;
-
-  var total = 0;
-  for(var i = 0; i < length; ++i) {
-    total += +values[i];
-  }
-
-  return Math.round(+total / +length) + ' ' + type + ' (' + Math.round(Math.round(+total / +length) / 3) + ' per athlete)';
-}
-
-function median(values, type) {
-  if(values.length === 0) {
-    return 'N/A';
-  }
-
-  var half = Math.floor(values.length / 2);
-
-  var median = values.length % 2
-      ? Math.round(values[half])
-      : Math.round((values[half - 1] + values[half]) / 2);
-
-  return median + ' ' + type + ' (' + (Math.round(median / 3)) + ' per athlete)';
-}
-
-function high(values, type) {
-  if(values.length === 0) {
-    return 'N/A';
-  }
-
-  return values[0] + ' ' + type;
-}
-
-function low(values, type) {
-  if(values.length === 0) {
-    return 'N/A';
-  }
-
-  return values[values.length - 1] + ' ' + type;
-}
-
-function score(values, type, place) {
-  if(place > values.length) {
-    return 'N/A';
-  }
-
-  return Math.round(values[place - 1]) + ' ' + type + ' (' + Math.round(values[place - 1] / 3) + ' per athlete)';
+function buildResults() {
+  return {
+    wods: [
+      {
+        number: 1,
+        submissions: wod1.length,
+        unit: 'pounds',
+        values: wod1
+      },
+      {
+        number: 2,
+        submissions: wod2.length,
+        unit: 'reps',
+        values: wod2
+      },
+      {
+        number: 3,
+        submissions: wod3.length,
+        unit: 'reps',
+        values: wod3
+      },
+      {
+        number: 4,
+        submissions: wod4.length,
+        unit: 'reps',
+        values: wod4
+      },
+      {
+        number: 5,
+        submissions: wod5.length,
+        unit: 'reps',
+        values: wod5
+      },
+      {
+        number: 6,
+        submissions: wod6.length,
+        unit: 'reps',
+        values: wod6
+      }
+    ]
+  };
 }
