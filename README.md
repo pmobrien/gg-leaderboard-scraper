@@ -6,12 +6,12 @@ It has one "endpoint": `GET /calculate/{division}`, where `{division}` is the nu
 
 Options for the divisions are:
 
+- 47: Pro/AsRx Men Team of 3
+- 48: Pro/AsRx Women Team of 3
 - 51: Intermediate/Scaled Men Team of 3
 - 52: Intermediate/Scaled Women Team of 3
 - 55: Masters 35+ Men Team of 3
 - 56: Masters 35+ Women Team of 3
-- 47: Pro/AsRx Men Team of 3
-- 48: Pro/AsRx Women Team of 3
 
 The response will look something like:
 
