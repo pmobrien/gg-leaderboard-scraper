@@ -149,10 +149,10 @@ function printWod(num, values, type) {
                '  Team Average (Top 10): ' + average(values, type, 10) + '\n' +
                '  Team Average (Top 20): ' + average(values, type, 20) + '\n' +
                '  Team Average (Top 45): ' + average(values, type, 45) + '\n' +
-               '  1st Place: ' + getScoreForPlace(values, type, 1) + '\n' +
-               '  10th Place: ' + getScoreForPlace(values, type, 10) + '\n' +
-               '  20th Place: ' + getScoreForPlace(values, type, 20) + '\n' +
-               '  45th Place: ' + getScoreForPlace(values, type, 45) + '\n';
+               '  1st Place: ' + score(values, type, 1) + '\n' +
+               '  10th Place: ' + score(values, type, 10) + '\n' +
+               '  20th Place: ' + score(values, type, 20) + '\n' +
+               '  45th Place: ' + score(values, type, 45) + '\n';
 
   return result + '\n';
 }
@@ -203,7 +203,7 @@ function low(values, type) {
   return values[values.length - 1] + ' ' + type;
 }
 
-function getScoreForPlace(values, type, place) {
+function score(values, type, place) {
   if(place > values.length) {
     return 'N/A';
   }
