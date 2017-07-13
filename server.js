@@ -150,7 +150,11 @@ function printWod(num, values, type, includeAthleteAverage) {
                '  Team High: ' + values[0] + '\n' +
                '  Team Low: ' + values[values.length - 1] + '\n' +
                '  Team Average (Top 10): ' + average(values, 10) + '\n' +
-               '  Team Average (Top 20): ' + average(values, 20) + '\n';
+               '  Team Average (Top 20): ' + average(values, 20) + '\n' +
+               '  Team Average (Top 45): ' + average(values, 45) + '\n' +
+               '  10th Place: ' + getScoreForPlace(values, 10) + '\n' +
+               '  20th Place: ' + getScoreForPlace(values, 20) + '\n' +
+               '  45th Place (Qualifier Cutoff): ' + getScoreForPlace(values, 45) + '\n';
 
   if(includeAthleteAverage) {
     result += '  Athlete Average: ' + athleteAverage(values) + ' reps\n';
@@ -160,7 +164,7 @@ function printWod(num, values, type, includeAthleteAverage) {
 }
 
 function average(values, count) {
-  // if we don't even have _count_ values, don't do anything
+  // if we don't even have <count> values, don't do anything
   if(count > values.length) {
     return 'N/A';
   }
@@ -187,4 +191,12 @@ function median(values) {
   } else {
     return Math.round((values[half - 1] + values[half]) / 2.0);
   }
+}
+
+function getScoreForPlace(values, place) {
+  if(place > values.length) {
+    return 'N/A';
+  }
+
+  return Math.round(values[place]);
 }
