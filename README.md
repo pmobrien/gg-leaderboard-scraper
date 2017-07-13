@@ -2,7 +2,8 @@ A quick and dirty project to pull results from the Granite Games 2017 [Leaderboa
 
 The service providing the leaderboard (FloElite) does not have any endpoints available, and it's all rendered server side so the only way to build the results is to parse through the html.
 
-It has one "endpoint": `GET /calculate/{division}`, where `{division}` is the number of the division you wish to retrieve data for.
+# Server
+The server has one "endpoint": `GET /calculate/{division}`, where `{division}` is the number of the division you wish to retrieve data for.
 
 Options for the divisions are:
 
@@ -47,3 +48,7 @@ Each `wod` will have:
 - `submissions`: How many results have been submitted for this `wod`. Does not include any submissions with the value `0`.
 - `unit`: The unit we are counting by for this `wod` (usually `reps` or `pounds`).
 - `values`: An array of all the results for this `wod`. This array is not sorted, and it does not include any submissions with the value `0`.
+
+
+# Client
+The client provides a selector to choose a division, and when the `Calculate` button is pressed, fetches the results from the client and provides some statistics based on those.
