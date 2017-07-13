@@ -1,18 +1,28 @@
-var http = require('http');
-var fs = require('fs');
-var request = require('request');
-var path = require('path');
-
+const fs = require('fs');
+const http = require('http');
+const path = require('path');
+const uuid = require('uuid/v1')
 const cheerio = require('cheerio');
+const request = require('request');
 
 http.createServer(function(request, response) {
   if(request.url.includes('/calculate')) {
+    var id = uuid();
     var ip = request.connection.remoteAddress;
     var division = request.url.substring(request.url.length - 2);   // kind of hacky, oh well
-  
-    console.log('calculate request for division ' + division + ' from ' + ip);
-  
+
+    console.log(
+      'Request id: ' + id + '\n' +
+      'Calculate request for division ' + division + ' from ' + ip
+    );
+
     calculate(division, function(data) {
+      console.log(
+        'Request id: ' + id + '\n' +
+        'Result:\n' +
+        data
+      );
+
       response.writeHead(200, { 'Content-Type': 'text/plain' });
       response.end(data, 'utf-8');
     });
@@ -36,17 +46,17 @@ http.createServer(function(request, response) {
         break;
       case '.png':
         contentType = 'image/png';
-        break;      
+        break;
       case '.jpg':
         contentType = 'image/jpg';
         break;
     }
-    
+
     if(request.url.includes('favicon')) {
       response.end();
       return;
     }
-  
+
     fs.readFile(filePath, function(error, content) {
       if(error) {
         console.log(error);
@@ -55,7 +65,7 @@ http.createServer(function(request, response) {
         response.end(content, 'utf-8');
       }
     });
-  } 
+  }
 }).listen(15000);
 
 var WOD1_INDEX = 5;
@@ -98,7 +108,7 @@ function addResults($, rows) {
 function addResult($, rows, i, wodIndex, values) {
   if($(rows[i].childNodes[wodIndex]).children('span').eq(1)[0]) {
     var value = +$(rows[i].childNodes[wodIndex]).children('span').eq(1)[0].children[0].data;
-    
+
     if(value) {
       values.push(value);
     }
@@ -121,7 +131,7 @@ function calculateWod2() {
   wod2.sort(function(a, b) {
     return a - b;
   }).reverse();
-  
+
   return printWod(2, wod2, 'reps', true);
 }
 
@@ -129,7 +139,7 @@ function calculateWod3() {
   wod3.sort(function(a, b) {
     return a - b;
   }).reverse();
-  
+
   return printWod(3, wod3, 'reps', true);
 }
 
@@ -139,7 +149,7 @@ function printWod(num, values, type, includeAthleteAverage) {
                '  Team Median: ' + median(values) + '\n' +
                '  Team High: ' + values[0] + '\n' +
                '  Team Low: ' + values[values.length - 1] + '\n';
-               
+
   if(includeAthleteAverage) {
     result += '  Athlete Average: ' + athleteAverage(values) + ' reps\n';
   }
@@ -152,7 +162,7 @@ function average(values) {
   for(var i = 0; i < values.length; ++i) {
     total += +values[i];
   }
-  
+
   return Math.round(+total / +values.length);
 }
 
