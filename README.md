@@ -1,4 +1,4 @@
-A brittle, hacked together project to pull results from the Granite Games 2017 [Leaderboard](http://registration.floelite.com/competitions/10/divisions/51/scoreboard?page=1) and provide some statistical analysis.
+A quick and dirty project to pull results from the Granite Games 2017 [Leaderboard](http://registration.floelite.com/competitions/10/divisions/51/scoreboard?page=1) and provide some statistical analysis.
 
 The service providing the leaderboard (FloElite) does not have any endpoints available, and it's all rendered server side so the only way to build the results is to parse through the html.
 
