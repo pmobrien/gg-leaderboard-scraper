@@ -1,0 +1,1 @@
+A brittle, hacked together project to pull results from the Granite Games 2017 [Leaderboard](http://registration.floelite.com/competitions/10/divisions/51/scoreboard?page=1) and provide some statistical analysis.
