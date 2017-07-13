@@ -1,0 +1,20 @@
+{
+  "name": "gg-leaderboard-scraper",
+  "version": "0.1.0",
+  "description": "A simple parser/data analysis tool for the Granite Games 2017 Leaderboard",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0-rc.2",
+    "request": "2.81.0",
+    "uuid": "3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmobrien/gg-leaderboard-scraper"
+  },
+  "author": "Patrick O'Brien",
+  "contributors": [],
+  "license": "MIT"
+}
