@@ -28,9 +28,11 @@ function calculate() {
                   '<div>Team Low: ' + low(wod.values, wod.unit) + '</div>' +
                   '<div>Team Average (Top 10): ' + average(wod.values, wod.unit, 10) + '</div>' +
                   '<div>Team Average (Top 20): ' + average(wod.values, wod.unit, 20) + '</div>' +
+                  '<div>Team Average (Top 30): ' + average(wod.values, wod.unit, 30) + '</div>' +
                   '<div>Team Average (Top 45): ' + average(wod.values, wod.unit, 45) + '</div>' +
                   '<div>10th Place: ' + score(wod.values, wod.unit, 10) + '</div>' +
                   '<div>20th Place: ' + score(wod.values, wod.unit, 20) + '</div>' +
+                  '<div>30th Place: ' + score(wod.values, wod.unit, 30) + '</div>' +
                   '<div>45th Place: ' + score(wod.values, wod.unit, 45) + '</div>' +
                   '<br>';
       }
