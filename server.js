@@ -51,7 +51,8 @@ http.createServer(function(request, response) {
         break;
     }
 
-    if(request.url.includes('favicon')) {
+    // these requests are failing and rather than dealing with them, just hacked this in
+    if(request.url.includes('favicon') || request.url.includes('apple-touch')) {
       response.end();
       return;
     }
