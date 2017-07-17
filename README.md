@@ -52,4 +52,4 @@ Each `wod` will have:
 
 
 # Client
-The client provides a selector to choose a division, and when the `Calculate` button is pressed, fetches the results from the client and provides some statistics based on those.
+The client provides a selector to choose a division, and when the `Calculate` button is pressed, fetches the results from the server and provides some statistics based on those.
